@@ -21,11 +21,12 @@ def lambda_handler(event, context):
         p_id = row['product_id']
         shipped = float(row['shipped_units'])
         total = float(row['total_units'])
-        
-        efficiency = shipped / total
-        
-        results.append({"id": p_id, "efficiency": efficiency})
-        
+        if total != 0:
+            efficiency = shipped / total
+        else:
+            efficiency = 0
+        results.append({'product_id': p_id, 'efficiency': efficiency})
+    
     print("Success!")
     return {
         "statusCode": 200,
